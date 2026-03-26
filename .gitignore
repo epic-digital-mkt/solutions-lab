@@ -1,0 +1,20 @@
+# Versões antigas e backups
+gerador-banners-dot-v16.html
+gerador-banners-dot-v17*.html
+gerador-banners-dot-v18*.html
+gerador-banners-dot-v19*.html
+gerador-banners-dot-v20*.html
+gerador-banners-dot-v21*.html
+gerador-banners-dot-v22.html
+gerador-banners-dot-v23.html
+gerador-banners-dot-v24*.html
+gerador-banners-dot-v25.html
+_old/
+_seguro/
+backlog17_mar.html
+*.zip
+*.log
+
+# Contexto Claude (uso interno)
+.claude/
+Restaurar*.txt
