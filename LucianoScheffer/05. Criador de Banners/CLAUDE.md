@@ -11,8 +11,8 @@ O usuário seleciona um template do Figma, edita textos e foto, e exporta o bann
 
 | Arquivo | Descrição |
 |---------|-----------|
-| `gerador-banners-dot-v30.html` | **Arquivo ativo** — versão em desenvolvimento |
-| `gerador-banners-dot-v29.html` | **Ponto de retorno seguro** — não alterar |
+| `gerador-banners-dot-v32.html` | **Arquivo ativo** — versão em desenvolvimento |
+| `gerador-banners-dot-v31.html` | **Ponto de retorno seguro** — não alterar |
 | `index.html` | Redirecionamento para o arquivo ativo (GitHub Pages) |
 | `server.js` | Servidor Node.js porta 3333 (uso local) |
 
@@ -73,6 +73,18 @@ O servidor:
 - **effectiveTextWidth:** sempre usar para textos dentro de containers (cap ao glassBox ou blocoTX, tolerância ±20px)
 - **pillBaseY fallback:** `fTag.y` (não `pf.y`) — para que `pillDY = 0` e a pill fique na posição correta
 - **walkNodes roda 2×** (discoverLayouts + extractLayoutMeta): código que deve rodar apenas na segunda vez deve estar FORA do guard `if (!meta.fields[key])`
+
+---
+
+## Gestos touch — versão mobile
+
+| Gesto | Comportamento |
+|-------|--------------|
+| 1 dedo (modo arrastar desativado) | Scroll vertical normal da página |
+| 1 dedo (modo arrastar ativo) | Arrasta a foto no canvas |
+| 2 dedos (pinch) | Zoom in/out do canvas |
+
+> **TODO:** organizar em documentação formal junto com o guia "Como preparar o Figma" — incluir convenção de layers, gestos mobile, e boas práticas de template.
 
 ---
 

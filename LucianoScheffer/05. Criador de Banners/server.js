@@ -107,6 +107,27 @@ function serveFile(filePath, res) {
   });
 }
 
+// ── TOKEN FIGMA: compartilhado entre todos os dispositivos na rede ────────
+let _figmaToken = '';
+
+function handleToken(req, res) {
+  if (req.method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    res.end(JSON.stringify({ token: _figmaToken }));
+    return;
+  }
+  if (req.method === 'POST') {
+    let body = '';
+    req.on('data', d => { body += d; });
+    req.on('end', () => {
+      try { const p = JSON.parse(body); if (p.token !== undefined) _figmaToken = p.token; } catch(e) {}
+      res.writeHead(204, { 'Access-Control-Allow-Origin': '*' }); res.end();
+    });
+    return;
+  }
+  res.writeHead(405, { 'Access-Control-Allow-Origin': '*' }); res.end();
+}
+
 // ── LOG REMOTO: armazena mensagens de debug do browser ────────────────────
 const logBuffer = [];
 const MAX_LOG = 200;
@@ -143,6 +164,7 @@ http.createServer(function(req, res) {
     res.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST', 'Access-Control-Allow-Headers': 'Content-Type' }); res.end(); return;
   }
 
+  if (pathname === '/token') { handleToken(req, res); return; }
   if (pathname === '/log') { handleLog(req, res); return; }
   if (pathname.startsWith('/figma-api/')) { figmaApi(pathname + (parsed.search || ''), req, res); return; }
   if (pathname === '/figma-img') { figmaImg(parsed.query, res); return; }
