@@ -11,8 +11,8 @@ O usuário seleciona um template do Figma, edita textos e foto, e exporta o bann
 
 | Arquivo | Descrição |
 |---------|-----------|
-| `gerador-banners-dot-v28.html` | **Arquivo ativo** — versão em desenvolvimento |
-| `gerador-banners-dot-v27.html` | **Ponto de retorno seguro** — não alterar |
+| `gerador-banners-dot-v30.html` | **Arquivo ativo** — versão em desenvolvimento |
+| `gerador-banners-dot-v29.html` | **Ponto de retorno seguro** — não alterar |
 | `index.html` | Redirecionamento para o arquivo ativo (GitHub Pages) |
 | `server.js` | Servidor Node.js porta 3333 (uso local) |
 
@@ -23,8 +23,8 @@ O usuário seleciona um template do Figma, edita textos e foto, e exporta o bann
 ## Servidor
 
 ```bash
-# Subir
-cd "c:/_Luciano Diversos/_estudos IA/05. Criador de Banners" && node server.js
+# Subir (pasta correta — server.js está na subpasta desde o git mv)
+cd "c:/_Luciano Diversos/_estudos IA/05. Criador de Banners/LucianoScheffer/05. Criador de Banners" && node server.js
 
 # Verificar se está rodando (deve retornar ~182000+ bytes)
 curl -s http://localhost:3333/ | wc -c

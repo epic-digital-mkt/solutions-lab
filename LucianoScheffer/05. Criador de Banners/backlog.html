@@ -177,7 +177,7 @@
 <div class="wrapper">
 
   <h1>Backlog — Criador de Banners</h1>
-  <p class="subtitle">Atualizado em 26/03/2026 · v27 — Fix B (tag icon + pill) concluído</p>
+  <p class="subtitle">Atualizado em 26/03/2026 · v28 — GitHub Pages + variantes de layout</p>
 
   <!-- PRIORIDADE -->
   <div class="priority-box">
@@ -230,6 +230,26 @@
           <td><span class="medal">✅</span></td>
           <td class="tag-item done">Fix B + Fix C — tag icon alinhado + Offset X/Y compacto</td>
           <td class="tag-why">icSlot centrado no pill, padRight do Figma, texto sem sobreposição, inputs 90px</td>
+        </tr>
+        <tr>
+          <td><span class="medal">✅</span></td>
+          <td class="tag-item done">v28 — GitHub Pages + variantes de layout (IS_LOCAL dual-env)</td>
+          <td class="tag-why">IS_LOCAL, _variantIndex, switchVariant, toggle + sugestão por titleLines, deploy GitHub Pages</td>
+        </tr>
+        <tr>
+          <td><span class="medal">✅</span></td>
+          <td class="tag-item done">v29 — C8 Formatação de texto: bold + cor por seleção</td>
+          <td class="tag-why">Toolbar só quando editado, bold toggle (800), cores do Figma, ranges acumulam, reset ao trocar layout</td>
+        </tr>
+        <tr>
+          <td><span class="medal">✅</span></td>
+          <td class="tag-item done">v30 — G1·G2·G3 Performance: cache de text layout + computeDynLayout 1×/frame + cache de ranges</td>
+          <td class="tag-why">_wrapCache, _rangesStyledCache, _frameCount — drag da foto fluido sem re-quebrar texto a 60fps</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted);font-weight:700">próx.</td>
+          <td class="tag-item">C7</td>
+          <td class="tag-why">↔️ Resize lateral do glass box / blocoTX</td>
         </tr>
         <tr>
           <td style="color:var(--muted);font-weight:700">próx.</td>
@@ -844,7 +864,7 @@
   </details>
 
   <!-- ═══════════════════════════════════════════════ -->
-  <div class="section-title">Melhorias Futuras <span class="badge">U1–U6 · C1–C6 · M1 · F1</span></div>
+  <div class="section-title">Melhorias Futuras <span class="badge">U1–U7 · C1–C8 · M1</span></div>
   <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">Features novas — crescimento da plataforma.</p>
 
   <!-- U1 -->
@@ -1098,11 +1118,39 @@
     </div>
   </details>
 
-  <!-- F1 -->
+  <!-- U7 -->
+  <details class="card">
+    <summary>
+      <span class="card-code">U7</span>
+      <span class="card-title">Conjuntos de formatos — sincronizar texto e foto entre formatos</span>
+      <span class="card-pills">
+        <span class="pill">🟡 Médio</span>
+        <span class="pill">⚠️ Atenção</span>
+        <span class="pill pill-time">⏱️ ~7h</span>
+      </span>
+      <span class="card-chevron">›</span>
+    </summary>
+    <div class="card-body">
+      <p class="card-desc">Mesma campanha em múltiplos formatos (square 1080×1080, stories 1080×1920, wide 1440×1080). Editar texto ou foto em um formato replica automaticamente nos outros. Exportar todos de uma vez como ZIP.</p>
+      <ul class="card-changes">
+        <li><strong>Convenção Figma:</strong> frames nomeados <code>set/campanha-verao/square</code>, <code>set/campanha-verao/stories</code>, <code>set/campanha-verao/wide</code></li>
+        <li><strong>Sync de foto:</strong> <code>foto.img</code> já persiste entre layouts — gratuito, sem mudança</li>
+        <li><strong>Sync de texto:</strong> <code>switchFormat()</code> salva texto antes de trocar → restaura depois (padrão do <code>switchVariant</code> existente)</li>
+        <li><strong>Strip de formatos:</strong> botões Square / Stories / Wide aparecem abaixo do canvas quando o layout pertence a um set</li>
+        <li><strong>Exportar set:</strong> botão gera ZIP com uma PNG por formato via JSZip (lazy load ~100KB)</li>
+      </ul>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px;">
+        ⚠️ Campos que não existem no formato destino são ignorados (nem todos os formatos têm os mesmos fields Figma).<br>
+        ✅ Reutiliza 100% do motor de render existente — apenas orquestra a troca de layout.
+      </p>
+    </div>
+  </details>
+
+  <!-- F1 → C8 -->
   <details class="card discarded">
     <summary>
-      <span class="card-code">F1</span>
-      <span class="card-title">Formatação inline de texto (negrito + cor por palavra)</span>
+      <span class="card-code">F1 → C8</span>
+      <span class="card-title">Formatação inline de texto (negrito + cor por seleção)</span>
       <span class="card-pills">
         <span class="pill" style="background:rgba(239,68,68,.12);color:#ef4444">❌ Descartado</span>
         <span class="pill">🟡 Médio</span>
@@ -1110,7 +1158,7 @@
       <span class="card-chevron">›</span>
     </summary>
     <div class="card-body">
-      <div class="card-warn" style="margin-top:12px;">❌ <strong>Descartado — mar/2026.</strong> A abordagem cria conflito direto com a formatação que vem do Figma (<code>segments</code> com pesos, cores e underlines por palavra). O operador sobrescreveria estilos definidos pelo designer sem perceber. Não é uma boa separação de responsabilidades.</div>
+      <div class="card-warn" style="margin-top:12px;">✅ <strong>Implementado como C8 — v29, mar/2026.</strong> A abordagem original (sobrescrever segments do Figma sempre) foi descartada. A versão implementada só ativa a barra de formatação quando o operador edita o texto — se o texto ainda é o original do Figma, os segments do Figma governam. Assim a separação de responsabilidades designer ↔ operador é preservada.</div>
     </div>
   </details>
 
@@ -1243,6 +1291,55 @@
         <li>Page no próprio Figma do cliente com a tabela completa de nomes de layers</li>
         <li>Exemplos visuais de cada layer nomeada</li>
         <li>Referência viva que fica junto com os designs</li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- C7 -->
+  <details class="card">
+    <summary>
+      <span class="card-code">C7</span>
+      <span class="card-title">Resize lateral do glass box / blocoTX</span>
+      <span class="card-pills">
+        <span class="pill">🟡 Médio</span>
+        <span class="pill">⚠️ Atenção</span>
+        <span class="pill pill-time">⏱️ ~3h30</span>
+      </span>
+      <span class="card-chevron">›</span>
+    </summary>
+    <div class="card-body">
+      <p class="card-desc">Arrastar as bordas esquerda e direita do glass box diretamente no canvas para ajustar a largura. O texto reflow automaticamente dentro do novo tamanho.</p>
+      <ul class="card-changes">
+        <li>Handles visuais (borda pontilhada + retângulos nas bordas L/R) no canvas, ocultos no export PNG</li>
+        <li>Arrastar borda direita → altera <code>gl.w</code>; arrastar borda esquerda → altera <code>gl.x</code> e <code>gl.w</code></li>
+        <li><code>effectiveTextWidth</code> e <code>computeDynLayout</code> já respondem automaticamente ao novo <code>gl.w</code></li>
+        <li>Largura mínima: 80px; altura continua auto-gerida pelo <code>computeDynLayout</code></li>
+        <li>Funciona para <code>blocoGlass</code> e <code>blocoTX</code></li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- C8 -->
+  <details class="card done">
+    <summary>
+      <span class="card-code">C8</span>
+      <span class="card-title">Formatação de texto: bold + cor por seleção <span class="done-badge">✅ v29 mar/2026</span></span>
+      <span class="card-pills">
+        <span class="pill">🟡 Médio</span>
+        <span class="pill">⚠️ Atenção</span>
+        <span class="pill pill-time">⏱️ ~5h</span>
+      </span>
+      <span class="card-chevron">›</span>
+    </summary>
+    <div class="card-body">
+      <p class="card-desc">Quando o operador digita texto novo, toda a formatação do Figma é descartada e ele pode formatar livremente: selecionar trecho no textarea e aplicar bold e/ou cor. A barra de formatação só aparece quando o texto foi editado.</p>
+      <ul class="card-changes">
+        <li>✅ Barra de formatação aparece somente quando texto ≠ original do Figma</li>
+        <li>✅ <strong>Bold por seleção:</strong> toggle (clica de novo para remover) — peso 800 no canvas</li>
+        <li>✅ Texto editado começa em regular (400) — sinaliza que pode ser formatado</li>
+        <li>✅ <strong>Cor por seleção:</strong> swatches extraídos das cores Figma do layout ativo (base + segments) + branco e preto fixos</li>
+        <li>✅ Bold + cor acumulam — aplicar um não apaga o outro</li>
+        <li>✅ Ao trocar de layout, texto e formatação resetam para o Figma original</li>
       </ul>
     </div>
   </details>
