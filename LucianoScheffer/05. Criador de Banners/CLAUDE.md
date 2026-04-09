@@ -11,8 +11,8 @@ O usuário seleciona um template do Figma, edita textos e foto, e exporta o bann
 
 | Arquivo | Descrição |
 |---------|-----------|
-| `gerador-banners-dot-v32.html` | **Arquivo ativo** — versão em desenvolvimento |
-| `gerador-banners-dot-v31.html` | **Ponto de retorno seguro** — não alterar |
+| `gerador-banners-dot-v34.html` | **Arquivo ativo** — versão em desenvolvimento |
+| `gerador-banners-dot-v33.html` | **Ponto de retorno seguro** — não alterar |
 | `index.html` | Redirecionamento para o arquivo ativo (GitHub Pages) |
 | `server.js` | Servidor Node.js porta 3333 (uso local) |
 

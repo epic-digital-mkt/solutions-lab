@@ -177,7 +177,7 @@
 <div class="wrapper">
 
   <h1>Backlog — Criador de Banners</h1>
-  <p class="subtitle">Atualizado em 26/03/2026 · v28 — GitHub Pages + variantes de layout</p>
+  <p class="subtitle">Atualizado em 08/04/2026 · v33 — zoom proporcional, strip de setas, modal de avisos</p>
 
   <!-- PRIORIDADE -->
   <div class="priority-box">
@@ -261,6 +261,11 @@
           <td class="tag-item">M1 · S4 · S11</td>
           <td class="tag-why">📱 Mobile friendly + Undo + Zoom canvas</td>
         </tr>
+        <tr>
+          <td style="color:var(--muted);font-weight:700">ideia</td>
+          <td class="tag-item">U8 · U9 · S16</td>
+          <td class="tag-why">🧠 Auto-detecção sem nomes · múltiplos tamanhos de export · Limpar reseta formatação</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -288,7 +293,7 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════ -->
-  <div class="section-title">Sugestões Claude <span class="badge">S1–S15</span></div>
+  <div class="section-title">Sugestões Claude <span class="badge">S1–S17</span></div>
   <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">Melhorias no que já existe — bugs de UX, robustez, performance e qualidade de código.</p>
 
   <!-- S1 -->
@@ -618,6 +623,51 @@
     </div>
   </details>
 
+  <!-- S16 -->
+  <details class="card">
+    <summary>
+      <span class="card-code">S16</span>
+      <span class="card-title">Limpar texto reseta também a formatação para fonte regular</span>
+      <span class="card-pills">
+        <span class="pill">🟢 Simples</span>
+        <span class="pill">✅ Seguro</span>
+        <span class="pill pill-time">⏱️ ~30min</span>
+      </span>
+      <span class="card-chevron">›</span>
+    </summary>
+    <div class="card-body">
+      <p class="card-desc">Hoje o botão "Limpar" apaga o texto digitado, mas mantém qualquer formatação inline (bold, cor) que o operador havia aplicado. Na próxima digitação, o texto começa com a formatação do estado anterior em vez do estilo padrão.</p>
+      <ul class="card-changes">
+        <li>Ao clicar em "Limpar", além de esvaziar o textarea, zerar os ranges de formatação (<code>styledWords = []</code>)</li>
+        <li>Restaurar também o <code>fontWeight</code> e <code>fontColor</code> para os valores originais do Figma do campo</li>
+        <li>Comportamento esperado: após Limpar, o operador começa a digitar em fonte regular, sem herdar formatação anterior</li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- S17 -->
+  <details class="card">
+    <summary>
+      <span class="card-code">S17</span>
+      <span class="card-title">Render de set em background (OffscreenCanvas)</span>
+      <span class="card-pills">
+        <span class="pill">🔴 Complexo</span>
+        <span class="pill">⚠️ Atenção</span>
+        <span class="pill pill-time">⏱️ ~1 dia</span>
+      </span>
+      <span class="card-chevron">›</span>
+    </summary>
+    <div class="card-body">
+      <p class="card-desc">Ao exportar sets de tamanho (ZIP com múltiplos formatos), cada formato é renderizado no canvas visível — o usuário vê cada banner piscando na tela durante o loop. Com <code>OffscreenCanvas</code>, o processo rodaria em background sem alterar o canvas ou layout ativos.</p>
+      <ul class="card-changes">
+        <li>Criar <code>OffscreenCanvas</code> por formato e passar <code>canvas/ctx</code> como parâmetro para <code>draw()</code></li>
+        <li><strong>Bloqueador principal:</strong> <code>draw()</code> usa variáveis globais <code>canvas</code> e <code>ctx</code> em dezenas de lugares — refactor não trivial</li>
+        <li>Após refactor: loop de ZIP não toca o canvas visível nem o layout ativo</li>
+        <li><strong>Risco:</strong> mudança arquitetural central; todos os paths de render precisam ser retestados</li>
+      </ul>
+    </div>
+  </details>
+
   <!-- ═══════════════════════════════════════════════ -->
   <div class="section-title">Bugs &amp; Robustez <span class="badge">N1–N5</span></div>
   <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">Problemas encontrados na análise do v23 — não cobertos pelo backlog anterior.</p>
@@ -864,7 +914,7 @@
   </details>
 
   <!-- ═══════════════════════════════════════════════ -->
-  <div class="section-title">Melhorias Futuras <span class="badge">U1–U7 · C1–C8 · M1</span></div>
+  <div class="section-title">Melhorias Futuras <span class="badge">U1–U9 · C1–C8 · M1</span></div>
   <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">Features novas — crescimento da plataforma.</p>
 
   <!-- U1 -->
@@ -1159,6 +1209,60 @@
     </summary>
     <div class="card-body">
       <div class="card-warn" style="margin-top:12px;">✅ <strong>Implementado como C8 — v29, mar/2026.</strong> A abordagem original (sobrescrever segments do Figma sempre) foi descartada. A versão implementada só ativa a barra de formatação quando o operador edita o texto — se o texto ainda é o original do Figma, os segments do Figma governam. Assim a separação de responsabilidades designer ↔ operador é preservada.</div>
+    </div>
+  </details>
+
+  <!-- U8 -->
+  <details class="card">
+    <summary>
+      <span class="card-code">U8</span>
+      <span class="card-title">Auto-detecção de elementos Figma sem nomenclaturas obrigatórias</span>
+      <span class="card-pills">
+        <span class="pill">🔴 Complexo</span>
+        <span class="pill">⚠️ Atenção</span>
+        <span class="pill pill-time">⏱️ ~1 dia</span>
+      </span>
+      <span class="card-chevron">›</span>
+    </summary>
+    <div class="card-body">
+      <p class="card-desc">Hoje o designer precisa renomear layers no Figma com nomes exatos (<code>field:titulo</code>, <code>blocoGlass</code>, <code>asset/logo</code>…) para que a ferramenta funcione. A ideia é inverter: a ferramenta analisa propriedades do nó (tipo, fills, effects, opacidade, hierarquia) e detecta automaticamente o papel de cada layer.</p>
+      <ul class="card-changes">
+        <li><strong>Alta confiança (90–100%):</strong> <code>BACKGROUND_BLUR</code> → blocoGlass · fill <code>IMAGE</code> → foto · <code>opacity=0</code> TEXT → ctatx · <code>opacity=0</code> não-TEXT → olhos</li>
+        <li><strong>Heurística (70–80%):</strong> maior <code>fontSize</code> no container → título · segundo maior → texto · TEXT curto próximo a pill → tag</li>
+        <li><strong>Múltiplos campos de texto (tx1, tx2, tx3…):</strong> peças específicas podem ter 3, 4 ou mais textos editáveis além do título e subtítulo — o sistema <code>tx1/tx2/…</code> já existe no código (<code>buildFieldUI</code> gera inputs dinamicamente, <code>drawEditableText</code> renderiza em loop). A auto-detecção precisa identificar e preencher esses campos extras em ordem de posição Y (de cima para baixo), após detectar título e texto</li>
+        <li><strong>Abordagem híbrida:</strong> nome explícito sempre tem prioridade — heurística é fallback apenas para layers sem nome</li>
+        <li>Backward-compatible: layouts já nomeados continuam funcionando sem nenhuma mudança</li>
+        <li>Log indica quais campos foram detectados por nome vs. por heurística</li>
+      </ul>
+      <div class="card-warn yellow">⚠️ Casos ambíguos ainda precisarão de nome explícito — ex: dois textos do mesmo tamanho, dois containers grandes. Heurística não elimina a necessidade de nomes, apenas os torna opcionais para layouts simples.</div>
+    </div>
+  </details>
+
+  <!-- U9 -->
+  <details class="card">
+    <summary>
+      <span class="card-code">U9</span>
+      <span class="card-title">Mesma peça em múltiplos tamanhos — exportar variações de escala</span>
+      <span class="card-pills">
+        <span class="pill">🟡 Médio</span>
+        <span class="pill">✅ Seguro</span>
+        <span class="pill pill-time">⏱️ ~4h</span>
+      </span>
+      <span class="card-chevron">›</span>
+    </summary>
+    <div class="card-body">
+      <p class="card-desc">Gerar a mesma peça em diferentes tamanhos para atender às exigências de cada canal (LinkedIn feed 1200×627, Twitter/X 1200×675, banner email 600×200 etc.) sem criar um frame Figma separado para cada resolução.</p>
+      <ul class="card-changes">
+        <li>O designer define apenas um frame no Figma (resolução master) e a ferramenta exporta em N tamanhos pré-configurados</li>
+        <li>Convenção proposta: metadado no nome do frame — <code>set/campanha/master</code> com lista de tamanhos em um text node especial</li>
+        <li>Alternativa: painel "Tamanhos de exportação" na sidebar com presets editáveis (LinkedIn, Twitter, E-mail, Custom)</li>
+        <li>Render proporcional: o canvas é escalado antes do <code>canvas.toBlob()</code> sem re-renderizar tudo do zero</li>
+        <li>Exportação em ZIP com um PNG por tamanho: <code>banner-linkedin-1200x627.png</code>, <code>banner-email-600x200.png</code> etc.</li>
+      </ul>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px;">
+        Diferente de U7 (que sincroniza texto/foto entre frames Figma distintos) — aqui é um único design exportado em diferentes resoluções.<br>
+        ✅ Reutiliza o motor de render; apenas adiciona um loop de escala + ZIP no export.
+      </p>
     </div>
   </details>
 
